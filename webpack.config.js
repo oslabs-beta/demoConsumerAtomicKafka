@@ -31,7 +31,7 @@ module.exports = {
     publicPath: '/build', //the default port is 8080, the default webpack dev server, load static files
     proxy: {
       '/': {
-        target: 'http://localhost:3000',
+        target: 'http://localhost:3001',
         secure: false,
       }
 
