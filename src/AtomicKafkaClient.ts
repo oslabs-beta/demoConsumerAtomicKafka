@@ -11,18 +11,25 @@ class AtomicKafkaClient {
 		// });
   }
 
-  consumer(state, setState){
+  consumer(state, setState, inv = null, setInv = null){
     const socket = io(this.address);
     // const socket = io(this.address);
     console.log('in clientSocketConsume()');
     console.log('state in clientSocketConsume(): ', state);
     // console.log('setState in clientSocketConsume(): ', setState);
+
     socket.on("newMessage", (arg) => {
       console.log("new data: ", arg);
       // console.log("data type: ", typeof arg);
       console.log("new truck state: ", state);
       // if(arg.SKU === state[state.length - 1].SKU) return;
-      return setState([...state, arg]);
+      setState([...state, arg]);
+      if (inv && arg) {
+        const newInv = {...inv};
+        const latest = JSON.parse(arg);
+        newInv[latest.SKU] -= latest.qty;
+        setInv(newInv);
+      }
     });
     return () => {
       console.log("is App ever off?");
