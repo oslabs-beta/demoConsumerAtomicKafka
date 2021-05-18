@@ -4,6 +4,18 @@ import AtomicKafkaClient from "./AtomicKafkaClient";
 
 // const socket = io("http://localhost:3001");
 
+interface Inventory {
+  [SKU: string]: number
+}
+
+const inventory: Inventory = {
+  X01: 3000,
+  X02: 1700,
+  X03: 200, 
+  X04: 9000,
+  X05: 2400,
+}
+
 function useInterval(callback, delay) {
   const savedCallback = useRef(null);
 
@@ -15,8 +27,6 @@ function useInterval(callback, delay) {
   // Set up the interval.
   useEffect(() => {
     function tick() {
-      // const node = savedCallback;
-      // if (savedCallback === undefined) throw new TypeError('');
       savedCallback?.current()
     }
     if (delay !== null) {
@@ -27,33 +37,53 @@ function useInterval(callback, delay) {
 }
 
 function Consumer() {
-  const [sku, setSku] = useState([10]);
+  const [inv, setInv] = useState(inventory);
+  const [sku, setSku] = useState([]);
   const akc = new AtomicKafkaClient("http://localhost:3001");
 
-  useInterval(() => akc.consumer(sku, setSku), 4000);
-    // const socket = io("http://localhost:3001");
-    // akc.clientSocketConsume(socket, truck, setTruck);
-    // const socket = io("http://localhost:3001");
-      // console.log('In useEffect of App!!');
-      // socket.on("newMessage",  (arg) => {
-      //   console.log("new data: ", arg);
-      //   // console.log("data type: ", typeof arg);
-      //   console.log("new truck state: ", truck);
-      //   return setTruck([...truck, arg]);
-      // });
 
-      // return () => {
-      //   console.log("is App ever off?");
-      //   socket.off();
-      // }, 5000);
+  useInterval(() => akc.consumer(sku, setSku, inv, setInv), 4000);
+  // useInterval(() => {
+  //   if (sku.length > 0) {
+  //     const newInv = {...inv};
+  //     const latest = JSON.parse(sku[sku.length - 1]);
+  //     console.log('sku latest: ', latest);
+  //     // const newInv = inv[latest.SKU] - latest.qty;
+  
+  //     newInv[latest.SKU] -= latest.qty;
+  
+  //     // const skuUpdate = latest.SKU;
+  //     // const newInv = {
+  //     //   ...inv,
+  //     //   skuUpdate : inv[latest.SKU] - latest.qty,
+  //     // }
+  //     return setInv(newInv);
+  //   }
+  // }, 4000)
+  
+  // function displayInventory () {
+  //   let output = [];
+  //   for (const sku in inv) {
+  //     output.push(<li key={sku}>{`${sku}: ${inv[sku]}`}</li>);
+  //   }
+  //   return output;
+  // }
+  // const dispInv = displayInventory();
 
   return (
     <div>
+      <div>
+        {Object.keys(inv).map((key, idx) => {
+          return (
+            <li key={idx}>{`${key}: ${inv[key]}`}</li>
+          )
+        })}
+      </div>
       <h1>LIVE DATA:</h1>
       <ul>
-        {sku.map((num, indx) => {
+        {sku.map((num, idx) => {
           return (
-            <li key={indx}>{num}</li>
+            <li key={idx}>{num}</li>
           )
         })}
       </ul>
