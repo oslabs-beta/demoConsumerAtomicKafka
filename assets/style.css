@@ -72,8 +72,16 @@ h1 {
   color: whitesmoke;
 }
 
-.sales-container {
+button {
+  font-size: 2em;
+}
 
+.sales-container {
+  margin: 0 auto;
+  width: 50%;
+  height: 25%;
+  overflow-y: scroll;
+  border: 2px dashed #C5C6C7;
 }
 
 .sales-li {
@@ -81,4 +89,5 @@ h1 {
   flex-direction: column;
   align-items: center;
   list-style: none;
+  font-size: 1.5em;
 }
