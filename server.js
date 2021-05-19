@@ -28,5 +28,5 @@ const server = app.listen(port, () => {
 const atomicKafkaInstance = new AtomicKafka(server);
 atomicKafkaInstance.newConsumer('truck-group');
 atomicKafkaInstance.socketConsume('truck-group', 'test_topic');
-// atomicKafkaInstance.newProducer('test_topic');
-// atomicKafkaInstance.socketProduce('test_topic', 4000);
+atomicKafkaInstance.newProducer('test_topic');
+atomicKafkaInstance.socketProduce('test_topic', 4000);

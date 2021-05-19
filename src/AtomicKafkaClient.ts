@@ -2,8 +2,10 @@ import io from "socket.io-client";
 
 class AtomicKafkaClient {
   address: string;
+  genId: number;
   constructor(kafkaServer){
     this.address = kafkaServer;
+    this.genId = 0;
     // this.io = require('socket.io-client')(kafkaServer, {
 		// 	cors: {
 		// 		origin: '*',
@@ -25,6 +27,10 @@ class AtomicKafkaClient {
       // if(arg.SKU === state[state.length - 1].SKU) return;
       let dupe = false;
       const latest = JSON.parse(arg);
+      if (latest.id === undefined) {
+        latest.id = "gen" + this.genId;
+        this.genId++;
+      }
       if (Object.keys(state).length > 0) {
         // if (state[state.length - 1].SKU === latest.SKU && state[state.length - 1].qty === latest.qty) dupe = true;
         if (latest.id in state) dupe = true;
