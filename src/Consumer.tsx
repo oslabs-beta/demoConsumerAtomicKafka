@@ -38,7 +38,7 @@ function useInterval(callback, delay) {
 
 function Consumer() {
   const [inv, setInv] = useState(inventory);
-  const [sku, setSku] = useState([]);
+  const [sku, setSku] = useState({});
   const akc = new AtomicKafkaClient("http://localhost:3001");
 
 
@@ -70,23 +70,35 @@ function Consumer() {
   // }
   // const dispInv = displayInventory();
 
+  function restock(sku) {
+    console.log('restocking for sku: ', sku);
+    const newInv = {...inv};
+    newInv[sku] += 100;
+    setInv(newInv);
+  }
+
   return (
     <div>
-      <div>
+      <div className='inv-container'>
         {Object.keys(inv).map((key, idx) => {
           return (
-            <li key={idx}>{`${key}: ${inv[key]}`}</li>
+            <li className='inv-li' key={idx}>
+            <div className='inv-sku'>{`${key}`}</div>
+            <div className='inv-qty'>{`${inv[key]}`}</div>
+            {/* {`${key}: ${inv[key]}`} */}
+            <button onClick={() => restock(key)}>Restock</button>
+            </li>
           )
         })}
       </div>
-      <h1>LIVE DATA:</h1>
-      <ul>
-        {sku.map((num, idx) => {
+      <h1>New Sales (Streaming Data)</h1>
+      <div className='sales-container'>
+        {Object.keys(sku).map((num, idx) => {
           return (
-            <li key={idx}>{num}</li>
+            <li className='sales-li' key={idx}>{JSON.stringify(sku[num])}</li>
           )
         })}
-      </ul>
+      </div>
     </div>
   );
 }
