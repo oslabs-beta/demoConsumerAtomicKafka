@@ -94,9 +94,11 @@ function Consumer() {
       <h1>New Sales (Streaming Data)</h1>
       <div className='sales-container'>
         {Object.keys(sku).map((num, idx) => {
-          return (
-            <li className='sales-li' key={idx}>{JSON.stringify(sku[num])}</li>
-          )
+          if (sku[num] !== undefined) {
+            return (
+              <li className='sales-li' key={idx}>{JSON.stringify(sku[num])}</li>
+            )
+          }
         })}
       </div>
     </div>
