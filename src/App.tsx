@@ -6,7 +6,7 @@ import Consumer from './Consumer';
 function App() {
   return(
     <div>
-      <h1>Inventory:</h1>
+      <h1>Inventory</h1>
       <Consumer />
       {/* <Producer /> */}
     </div>
