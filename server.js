@@ -8,7 +8,6 @@ const port = 3001;
 
 app.use(express.urlencoded({ extended:true }));
 app.use(express.json());
-app.use('/assets', express.static(path.join(__dirname, './assets')));
 app.get('/', (req, res) => {
   console.log('*** serving root of demo app ( / )');
   res.sendFile(path.resolve(__dirname + '/index.html'))
@@ -28,5 +27,5 @@ const server = app.listen(port, () => {
 const atomicKafkaInstance = new AtomicKafka(server);
 atomicKafkaInstance.newConsumer('truck-group');
 atomicKafkaInstance.socketConsume('truck-group', 'test_topic');
-atomicKafkaInstance.newProducer('test_topic');
-atomicKafkaInstance.socketProduce('test_topic', 4000);
+// atomicKafkaInstance.newProducer('test_topic');
+// atomicKafkaInstance.socketProduce('test_topic', 4000);
