@@ -74,6 +74,22 @@ h1 {
 
 button {
   font-size: 2em;
+  background-color: #0B0C10;
+  color: #66FCF1;
+  border: 2px solid #66FCF1;
+}
+
+button:hover {
+  background-color: #66FCF1;
+  color: #0B0C10;
+  border: 2px solid #0B0C10;
+}
+
+button:focus {
+  outline: none;
+  background-color: #45A29E;
+  color: #0B0C10;
+  border: 2px solid #0B0C10;
 }
 
 .sales-container {
