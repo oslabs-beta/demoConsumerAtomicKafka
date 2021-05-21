@@ -94,9 +94,14 @@ function Consumer() {
       <h1>New Sales (Streaming Data)</h1>
       <div className='sales-container'>
         {Object.keys(sku).map((num, idx) => {
+          let _id = sku[num].id;
+          let _sku = sku[num].SKU;
+          let _qty = sku[num].qty;
           if (sku[num] !== undefined) {
             return (
-              <li className='sales-li' key={idx}>{JSON.stringify(sku[num])}</li>
+              <li className='sales-li' key={idx}>
+                <span className='order'><b>ID:</b> {_id} | <b>SKU:</b> {_sku} | <b>QTY:</b> {_qty}</span>
+              </li>
             )
           }
         })}
